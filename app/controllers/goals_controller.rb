@@ -1,3 +1,38 @@
 class GoalsController < ApplicationController
   before_action :authenticate_user!
+
+  def index
+    @goals = current_user.goals.order(created_at: :desc)
+  end
+
+  def show
+    @goal = current_user.goals.find(params[:id])
+    @tasks = @goal.tasks.order(created_at: :desc).page(params[:page]).per(10)
+  end
+
+  def edit
+    @goal = current_user.goals.find(params[:id])
+  end
+
+  def update
+    @goal = current_user.goals.find(params[:id])
+    if @goal.update(goal_params)
+      redirect_to goals_path, notice: t("views.goals.update.success")
+    else
+      flash.now[:alert] = t("views.goals.update.failure")
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @goal = current_user.goals.find(params[:id])
+    @goal.destroy
+    redirect_to goals_path, notice: t("views.goals.destroy.success")
+  end
+
+  private
+
+  def goal_params
+    params.require(:goal).permit(:title, :description, :start_date)
+  end
 end
