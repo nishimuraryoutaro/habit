@@ -9,17 +9,4 @@ class HomeController < ApplicationController
         @selected_date = Date.current
       end
   end
-
-  def create
-    goal = @user.goals.new(goal_params) # 目的日が空でもモデルで+3ヶ月補完
-    if goal.save
-      redirect_to profile_path(@user), notice: "新しい目標を作成しました。"
-    else
-      redirect_to profile_path(@user), alert: goal.errors.full_messages.join(", ")
-    end
-  end
-
-  def goal_params
-    params.require(:goal).permit(:title, :start_date, :target_date, :description)
-  end
 end

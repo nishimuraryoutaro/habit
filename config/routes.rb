@@ -14,5 +14,5 @@ Rails.application.routes.draw do
   # root "posts#index"
   root "home#index"
 
-  resources :goals, only: [ :index, :show, :edit, :update, :destroy ]
+  resources :goals, only: [ :index, :show, :edit, :new, :update, :destroy ]
 end

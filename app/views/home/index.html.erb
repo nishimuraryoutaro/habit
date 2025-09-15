@@ -8,5 +8,9 @@
 
     <div class="progress"><div class="progress-bar bg-success" ></div></div>
   </div>
-</div
->
+</div>
+<% if @goal.present? %>
+  <%= link_to "edit", edit_goal_path(@goal) %>
+<% else %>
+  <%= link_to "Goalを作成", new_goal_path %>
+<% end %>

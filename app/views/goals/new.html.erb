@@ -1,0 +1,19 @@
+<!-- 期間（開始日・目的日） -->
+<%= form_with model: @goal, url: root_path(@user), method: :put do |f| %>
+  <div class="mb-2">
+    <%= f.label :title, "タイトル" %>
+    <%= f.text_field :title, class:"form-control", placeholder:"例：TOEIC 700" %>
+  </div>
+  <div class="row g-2">
+    <div class="col">
+      <%= f.label :start_date, "開始日" %>
+      <%= f.date_field :start_date, class:"form-control" %>
+    </div>
+  </div>
+
+  <!-- 説明 -->
+  <div class="mb-3 mt-2">
+    <%= f.label :description, "説明" %>
+    <%= f.text_area :description, rows:3, class:"form-control", placeholder:"目標の背景や計画をメモ" %>
+  </div>
+<% end %>
