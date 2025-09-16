@@ -1,6 +1,15 @@
 <!-- 期間（開始日・目的日） -->
-<%= form_with model: @goal, url: root_path(@user), method: :put do |f| %>
+<%= form_with model: @goal, url: goals_path, method: :post do |f| %>
   <div class="mb-2">
+    <% if @goal.errors.any? %>
+      <div class="alert alert-danger">
+        <ul>
+          <% @goal.errors.full_messages.each do |m| %>
+            <li><%= m %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
     <%= f.label :title, "タイトル" %>
     <%= f.text_field :title, class:"form-control", placeholder:"例：TOEIC 700" %>
   </div>
@@ -16,4 +25,5 @@
     <%= f.label :description, "説明" %>
     <%= f.text_area :description, rows:3, class:"form-control", placeholder:"目標の背景や計画をメモ" %>
   </div>
+  <%= f.submit "作成" %>
 <% end %>

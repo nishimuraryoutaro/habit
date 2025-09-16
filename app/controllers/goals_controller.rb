@@ -7,7 +7,6 @@ class GoalsController < ApplicationController
 
   def show
     @goal = current_user.goals.find(params[:id])
-    @tasks = @goal.tasks.order(created_at: :desc).page(params[:page]).per(10)
   end
 
   def new
@@ -17,8 +16,9 @@ class GoalsController < ApplicationController
   def create
     @goal = current_user.goals.new(goal_params)
     if @goal.save
-      redirect_to @goal, notice: "Goalを作成しました"
+      redirect_to root_path(@goal), notice: "Goalを作成しました"
     else
+      flash.now[:error] = "作成に失敗しました"
       render :new, status: :unprocessable_entity
     end
   end
