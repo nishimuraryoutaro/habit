@@ -4,7 +4,7 @@
     <% @goals.each do |g| %>
       <li class="list-group-item d-flex justify-content-between">
         <span><strong><%= g.title %></strong>
-          <span class="text-muted xsmall">/ <%= g.start_date %>〜<%= g.target_date %></span></span>
+          <span class="text-muted xsmall">/ <%= g.start_date %><%= g.target_date %><%= g.description %></span></span>
         <%= link_to "詳細", goal_path(g, goal_id: g.id), class:"btn btn-outline-secondary btn-sm" %>
       </li>
     <% end %>

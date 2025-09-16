@@ -8,5 +8,11 @@ class HomeController < ApplicationController
       else
         @selected_date = Date.current
       end
+
+    if params[:id].present?
+      @goal = current_user.goals.find_by(id: params[:id])
+    else
+      @goal = current_user.goals.order(:created_at).first
+    end
   end
 end

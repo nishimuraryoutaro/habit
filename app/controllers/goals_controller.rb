@@ -2,7 +2,7 @@ class GoalsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @goals = current_user.goals.order(created_at: :desc)
+    @goals = current_user.goals.all
   end
 
   def show
