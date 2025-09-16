@@ -10,6 +10,18 @@ class GoalsController < ApplicationController
     @tasks = @goal.tasks.order(created_at: :desc).page(params[:page]).per(10)
   end
 
+  def new
+    @goal = current_user.goals.new
+  end
+
+  def create
+    @goal = current_user.goals.new(goal_params)
+    if @goal.save
+      redirect_to @goal, notice: "Goalを作成しました"
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
   def edit
     @goal = current_user.goals.find(params[:id])
   end
