@@ -1,20 +1,26 @@
 
-<div class="col-12 col-md-4">
-  <div class="card shadow-sm h-100">
-    <div class="card-header bg-white">最終目標</div>
-    <div class="card-body">
-      <h5 class="mb-2"><%= @goal.title %></h5>
-      <div class="text-muted xsmall mb-2">
-        期間: <%= @goal.start_date || "—" %> 〜 <%= @goal.target_date || "—" %>
+<div class="container my-4">
+  <% if @goal.blank? %>
+      <div class="alert alert-info">プロフィールで目標を作成してください。</div>
+      <%= link_to "プロフィールへ", profile_path(current_user), class:"btn btn-primary" %>
+  <% end %>
+  <div class="col-12 col-md-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-header bg-white">最終目標</div>
+      <div class="card-body">
+        <h5 class="mb-2"><%= @goal.title %></h5>
+        <div class="text-muted xsmall mb-2">
+          期間: <%= @goal.start_date || "—" %> 〜 <%= @goal.target_date || "—" %>
+        </div>
+        <p class="text-muted xsmall"><%= @goal.description %></p>
+        <div class="progress"><div class="progress-bar bg-success" style="width:%">%</div></div>
       </div>
-      <p class="text-muted xsmall"><%= @goal.description %></p>
-      <div class="progress"><div class="progress-bar bg-success" style="width:%">%</div></div>
     </div>
   </div>
-</div>
 
-<% if @goal.present? %>
-  <%= link_to "edit", edit_goal_path(@goal) %>
-<% else %>
-  <%= link_to "Goalを作成", new_goal_path %>
-<% end %>
+  <% if @goal.present? %>
+    <%= link_to "edit", edit_goal_path(@goal) %>
+  <% else %>
+    <%= link_to "Goalを作成", new_goal_path %>
+  <% end %>
+</div>
