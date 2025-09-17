@@ -1,41 +1,74 @@
-<div class="d-flex align-items-center gap-3 mb-3">
-  <span class="avatar d-inline-grid place-items-center rounded-circle bg-dark text-white fw-bold"
-        style="width:34px;height:34px;display:inline-grid;place-items:center;">
-    <%= @user.email.first&.upcase || "U" %>
-  </span>
-  <div>
-    <div class="h4 mb-1 fw-bold"><%= @user.email %></div>
+<div class="container my-4">
+  <div class="d-flex align-items-center gap-3 mb-3">
+    <span class="avatar d-inline-grid place-items-center rounded-circle bg-dark text-white fw-bold"
+          style="width:34px;height:34px;display:inline-grid;place-items:center;">
+      <%= @user.email.first&.upcase || "U" %>
+    </span>
+    <div>
+      <div class="h4 mb-1 fw-bold"><%= @user.email %></div>
+    </div>
   </div>
-  <div class="card shadow-sm mb-4">
-    <div class="card-header bg-white">代表目標の編集</div>
-    <div class="card-body">
-      <%= form_with model: @goal, url: profile_path(@user), method: :put do |f| %>
-        <!-- タイトル -->
-        <div class="mb-2">
-          <%= f.label :title, "タイトル" %>
-          <%= f.text_field :title, class:"form-control", placeholder:"例：TOEIC 700" %>
-        </div>
-
-        <!-- 期間（開始日・目的日） -->
-        <div class="row g-2">
-          <div class="col">
-            <%= f.label :start_date, "開始日" %>
-            <%= f.date_field :start_date, class:"form-control" %>
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-white">代表目標の編集</div>
+      <div class="card-body">
+        <%= form_with model: @goal, url: profile_path(@user), method: :put do |f| %>
+          <div class="mb-2">
+            <%= f.label :title, "タイトル" %>
+            <%= f.text_field :title, class:"form-control", placeholder:"例：TOEIC 700" %>
           </div>
-          <div class="col">
-            <%= f.label :target_date, "目的日（空なら+3ヶ月）" %>
-            <%= f.date_field :target_date, class:"form-control", value:(@goal.target_date) %>
+          <div class="row g-2">
+            <div class="col">
+              <%= f.label :start_date, "開始日" %>
+              <%= f.date_field :start_date, class:"form-control" %>
+            </div>
+            <div class="col">
+              <%= f.label :target_date, "目的日（空なら+3ヶ月）" %>
+              <%= f.date_field :target_date, class:"form-control", value:(@goal.target_date) %>
+            </div>
           </div>
-        </div>
-        <div class="mb-3 mt-2">
-          <%= f.label :description, "説明" %>
-          <%= f.text_area :description, rows:3, class:"form-control", placeholder:"目標の背景や計画をメモ" %>
-        </div>
-        <%= f.submit "保存", class:"btn btn-primary" %>
-        <% if @goal.persisted? %>
-          <%= link_to "Goal詳細へ", goal_path(@goal, goal_id: @goal.id),class:"btn btn-outline-secondary ms-2" %>
+          <div class="mb-3 mt-2">
+            <%= f.label :description, "説明" %>
+            <%= f.text_area :description, class:"form-control", placeholder:"目標の背景や計画をメモ" %>
+          </div>
+          <%= f.submit "保存", class:"btn btn-primary" %>
         <% end %>
-      <% end %>
+      </div>
+    </div>
+    <div class="card shadow-sm">
+    <div class="card-header bg-white">あなたの目標一覧</div>
+    <div class="card-body p-0">
+      <table class="table table-hover mb-0">
+        <thead>
+          <tr>
+            <th>タイトル</th>
+            <th>期間</th>
+            <th>説明</th>
+            <th class="text-end">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @goals.each do |g| %>
+            <tr>
+              <td class="fw-semibold"><%= g.title %></td>
+              <td class="text-muted xsmall">
+                <%= g.start_date || "—" %> 〜 <%= g.target_date || "—" %>
+              </td>
+              <td class="text-truncate" style="max-width:320px;"><%= g.description %></td>
+              <td class="text-end">
+                <%= link_to "HOMEで表示",root_path(goal_id: g.id), class:"btn btn-outline-primary btn-sm" %>
+                <%= link_to "Goal詳細", goal_path(g, goal_id: g.id), class:"btn btn-outline-secondary btn-sm ms-1" %>
+              </td>
+            </tr>
+          <% end %>
+          <% if @goals.empty? %>
+            <tr>
+              <td colspan="4" class="text-muted small p-3">
+                まだ目標がありません。上のフォームから作成してください。
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
