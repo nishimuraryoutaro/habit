@@ -5,6 +5,37 @@
   </span>
   <div>
     <div class="h4 mb-1 fw-bold"><%= @user.email %></div>
-    
+  </div>
+  <div class="card shadow-sm mb-4">
+    <div class="card-header bg-white">代表目標の編集</div>
+    <div class="card-body">
+      <%= form_with model: @goal, url: profile_path(@user), method: :put do |f| %>
+        <!-- タイトル -->
+        <div class="mb-2">
+          <%= f.label :title, "タイトル" %>
+          <%= f.text_field :title, class:"form-control", placeholder:"例：TOEIC 700" %>
+        </div>
+
+        <!-- 期間（開始日・目的日） -->
+        <div class="row g-2">
+          <div class="col">
+            <%= f.label :start_date, "開始日" %>
+            <%= f.date_field :start_date, class:"form-control" %>
+          </div>
+          <div class="col">
+            <%= f.label :target_date, "目的日（空なら+3ヶ月）" %>
+            <%= f.date_field :target_date, class:"form-control", value:(@goal.target_date) %>
+          </div>
+        </div>
+        <div class="mb-3 mt-2">
+          <%= f.label :description, "説明" %>
+          <%= f.text_area :description, rows:3, class:"form-control", placeholder:"目標の背景や計画をメモ" %>
+        </div>
+        <%= f.submit "保存", class:"btn btn-primary" %>
+        <% if @goal.persisted? %>
+          <%= link_to "Goal詳細へ", goal_path(@goal, goal_id: @goal.id),class:"btn btn-outline-secondary ms-2" %>
+        <% end %>
+      <% end %>
+    </div>
   </div>
 </div>

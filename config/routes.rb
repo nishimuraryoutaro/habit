@@ -16,5 +16,5 @@ Rails.application.routes.draw do
 
   resources :goals, only: [ :index, :show, :edit, :create, :new, :update, :destroy ]
 
-  resources :profiles, only: [ :show, :update ]
+  resources :profiles, only: [ :show, :create, :update ]
 end
