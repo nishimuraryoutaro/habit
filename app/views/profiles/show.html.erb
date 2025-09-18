@@ -55,7 +55,7 @@
               </td>
               <td class="text-truncate" style="max-width:320px;"><%= g.description %></td>
               <td class="text-end">
-                <%= link_to "HOMEで表示",root_path(goal_id: g.id), class:"btn btn-outline-primary btn-sm" %>
+                <%= link_to "HOMEで表示",root_path(g,goal_id: g.id), class:"btn btn-outline-primary btn-sm" %>
                 <%= link_to "Goal詳細", goal_path(g, goal_id: g.id), class:"btn btn-outline-secondary btn-sm ms-1" %>
               </td>
             </tr>
