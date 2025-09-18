@@ -15,4 +15,6 @@ Rails.application.routes.draw do
   root "home#index"
 
   resources :goals, only: [ :index, :show, :edit, :create, :new, :update, :destroy ]
+
+  resources :profiles, only: [ :show, :create, :update ]
 end

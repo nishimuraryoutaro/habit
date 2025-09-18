@@ -29,9 +29,9 @@
       <%= link_to "Habit", root_path, class:"navbar-brand fw-bold" %>
       <div class="ms-auto">
         <% if user_signed_in? %>
-          <%= link_to "Home", root_path, class:"btn btn-link" %>
+          <%= link_to "Home", home_path_with_goal(@goal&.id), class:"btn btn-link" %>
           <%= link_to "Goals", goals_path, class:"btn btn-link" %>
-          <%= link_to "Profile", class:"btn btn-link" %>
+          <%= link_to "Profile", profile_path(current_user), class:"btn btn-link" %>
         <% else %>
           <%= link_to "ログイン", new_user_session_path, class:"btn btn-primary" %>
         <% end %>
