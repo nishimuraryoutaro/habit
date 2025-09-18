@@ -17,6 +17,31 @@
       </div>
     </div>
   </div>
+  <div class="col-12 col-md-8">
+    <div class="card shadow-sm">
+      <div class="card-header bg-white d-flex align-items-center justify-content-between">
+        <h6 class="mb-0">今日のタスク（<%= @selected_date %>）</h6>
+        <small class="text-muted"><%= @done_count %>/<%= @total_count %> 完了</small>
+      </div>
+      <div class="card-body p-0">
+        <ul class="list-group list-group-flush">
+          <% @todos_today.each do |t| %>
+            <li class="list-group-item d-flex align-items-center" data-controller="check">
+              <%= form_with model: t, url: daily_task_path(t), method: :patch, class:"d-flex align-items-center w-100", data:{ check_target:"form" } do |f| %>
+                <div class="form-check me-2">
+                  <%= f.check_box :done, class:"form-check-input", checked:t.done, data:{ action:"change->check#toggle", check_target:"checkbox" } %>
+                </div>
+                <span class="flex-grow-1 <%= 'task-done' if t.done %>" data-check-target="label"><%= t.title %></span>
+              <% end %>
+            </li>
+          <% end %>
+          <% if @todos_today.empty? %>
+            <li class="list-group-item text-muted small">この日に設定されたタスクはまだありません。</li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
   <% if @goal.present? %>
     <%= link_to "edit", edit_goal_path(@goal) %>
   <% else %>
