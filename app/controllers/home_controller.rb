@@ -17,5 +17,14 @@ class HomeController < ApplicationController
     else
       @goal = current_user.goals.order(:created_at).first
     end
+
+    if @goal.present?
+      @todos_today = current_user.daily_tasks.where(goal: @goal, date: @selected_date).order(created_at: :asc).limit(3)
+    else
+      @todos_today = DailyTask.none
+    end
+
+    @done_count  = @todos_today.where(done: true).count
+    @total_count = @todos_today.size
   end
 end
