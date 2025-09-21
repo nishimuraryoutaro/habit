@@ -1,0 +1,32 @@
+<!-- app/views/daily_tasks/new.html.erb -->
+<div class="container my-4">
+  <h5 class="mb-2"><%= @goal.title %></h5>
+  <div class="text-muted xsmall mb-3">
+    編集日：<%= @date %> / 期間: <%= @goal.start_date || "—" %> 〜 <%= @goal.target_date || "—" %>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-header bg-white">この日のタスク編集（最大3件）</div>
+    <div class="card-body">
+      <%= form_with url: daily_tasks_path, method: :post, local: true do %>
+        <%= hidden_field_tag :goal_id, @goal.id %>
+        <%= hidden_field_tag :date,    @date.to_s %>
+
+        <% @tasks.each_with_index do |t, i| %>
+          <div class="border rounded p-2 mb-2">
+            <div class="d-flex align-items-center gap-2">
+              <%= hidden_field_tag "daily_tasks[#{i}][id]", t.id %>
+              <%= text_field_tag  "daily_tasks[#{i}][title]", t.title, class:"form-control", placeholder:"タスク#{i+1}" %>
+            </div>
+            <small class="text-muted">※ タイトルを空で保存すると、この枠は削除されます</small>
+          </div>
+        <% end %>
+
+        <div class="d-flex justify-content-between">
+          <%= link_to "← HOMEへ戻る", root_path(goal_id: @goal.id, date: @date), class:"btn btn-outline-secondary" %>
+          <%= submit_tag "保存する", class:"btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -43,6 +43,11 @@
     </div>
   </div>
   <% if @goal.present? %>
+    <%= link_to "この日のタスクを編集",
+        new_daily_task_path(goal_id: @goal.id, date: @selected_date),
+        class:"btn btn-sm btn-outline-primary" %>
+  <% end %>
+  <% if @goal.present? %>
     <%= link_to "edit", edit_goal_path(@goal) %>
   <% else %>
     <%= link_to "Goalを作成", new_goal_path %>
