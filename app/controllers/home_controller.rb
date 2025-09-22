@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  before_action :authenticate_user!, only: [:index]
+  before_action :authenticate_user!, only: [ :index ]
   def index
     raw = params[:date].to_s.strip
       if raw.match?(/\A\d{4}-\d{2}-\d{2}\z/)
