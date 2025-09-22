@@ -23,4 +23,23 @@ class DailyTasksController < ApplicationController
       @tasks << current_user.daily_tasks.new(goal: @goal, date: @date)
     end
   end
+
+  def create
+    @goal = current_user.goals.find_by(id: params[:goal_id])
+
+    raw = params[:daily_tasks] || {}
+      if raw.is_a?(Array)
+        raw
+      elsif raw.respond_to?(:values)
+        raw.values
+      else
+        []
+      end
+
+      if task.save
+        redirect_to root_path, notice: "OK"
+      else
+        redirect_to new_daily_task_path(goal_id: @goal.id, date: @date), alert: task.errors.full_messages.to_sentence
+      end
+  end
 end
