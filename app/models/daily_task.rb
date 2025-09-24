@@ -2,5 +2,5 @@ class DailyTask < ApplicationRecord
   belongs_to :user
   belongs_to :goal
 
-  validates :title, :date, presence: true
+  validates :title, length: { maximum: 255 }
 end

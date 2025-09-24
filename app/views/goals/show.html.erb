@@ -1,4 +1,6 @@
 <div class="goal container my-4">
-  <h1 class="article_title"><%= @goal.title %></h1>
-
+  <%= form_with url: daily_tasks_path, method: :post, local: true do %>
+    <%= hidden_field_tag :goal_id, @goal.id %>
+    <%= hidden_field_tag :date,    @date.to_s %>
+  <% end %>
 </div>
