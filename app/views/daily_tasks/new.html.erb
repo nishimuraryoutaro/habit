@@ -11,15 +11,9 @@
       <%= form_with url: daily_tasks_path, method: :post, local: true do %>
         <%= hidden_field_tag :goal_id, @goal.id %>
         <%= hidden_field_tag :date,    @date.to_s %>
-
         <% @tasks.each_with_index do |t, i| %>
-          <div class="border rounded p-2 mb-2">
-            <div class="d-flex align-items-center gap-2">
-              <%= hidden_field_tag "daily_tasks[#{i}][id]", t.id %>
-              <%= text_field_tag  "daily_tasks[#{i}][title]", t.title, class:"form-control", placeholder:"タスク#{i+1}" %>
-            </div>
-            <small class="text-muted">※ タイトルを空で保存すると、この枠は削除されます</small>
-          </div>
+          <%= hidden_field_tag "daily_tasks[#{i}][id]", t.id %>
+          <%= text_field_tag  "daily_tasks[#{i}][title]", t.title, class:"form-control", placeholder:"タスク" %>
         <% end %>
 
         <div class="d-flex justify-content-between">
