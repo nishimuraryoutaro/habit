@@ -21,9 +21,9 @@
               <%= f.label :start_date, "開始日" %>
               <%= f.date_field :start_date, class:"form-control" %>
             </div>
-            <div class="col">
-              <%= f.label :target_date, "目的日（空なら+3ヶ月）" %>
-              <%= f.date_field :target_date, class:"form-control", value:(@goal.target_date) %>
+            <div class="col-6 col-md-4">
+              <%= f.label :target_date, "目的日" %>
+              <%= f.date_field :target_date, class:"form-control", required: true %>
             </div>
           </div>
           <div class="mb-3 mt-2">
