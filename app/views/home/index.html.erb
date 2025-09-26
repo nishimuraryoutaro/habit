@@ -52,4 +52,33 @@
   <% else %>
     <%= link_to "Goalを作成", new_goal_path %>
   <% end %>
+
+  <div class="card shadow-sm mt-3">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+      <span>カレンダー（ゴール期間）</span>
+      <% if @goal_one && @goal_three %>
+        <div class="xsmall">
+          <%= link_to "3ヶ月のゴールを表示", root_path(goal_id: @goal_three.id, date: @selected_date) %> /
+          <%= link_to "1ヶ月のゴールを表示", root_path(goal_id: @goal_one.id,   date: @selected_date) %>
+        </div>
+      <% end %>
+    </div>
+    <div class="card-body">
+      <% if @goal %>
+        <div class="calendar-grid">
+          <% ["月","火","水","木","金","土","日"].each do |w| %>
+            <div class="calendar-cell calendar-head"><%= w %></div>
+          <% end %>
+          <% @period_days.each do |day| %>
+            <% count = @days_with_counts.to_h[day] || 0 %>
+            <%= link_to root_path(goal_id: @goal.id, date: day.iso8601),class:"calendar-cell #{'calendar-active' if day == @selected_date}" do %>
+              <span><%= day.day %></span>
+            <% end %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="text-muted">表示する目標がありません</div>
+      <% end %>
+    </div>
+  </div>
 </div>

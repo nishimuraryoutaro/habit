@@ -24,6 +24,15 @@ class HomeController < ApplicationController
       @todos_today = DailyTask.none
     end
 
+    @period_days      = []
+    @days_with_counts = {}
+
+    if @goal&.start_date && @goal&.target_date
+      range = (@goal.start_date..@goal.target_date)
+      @period_days = range.to_a
+      @days_with_counts = current_user.daily_tasks.where(goal: @goal, date: range).group(:date).count
+    end
+
     @done_count  = @todos_today.where(done: true).count
     @total_count = @todos_today.size
   end

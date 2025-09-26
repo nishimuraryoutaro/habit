@@ -24,13 +24,11 @@ class DailyTasksController < ApplicationController
     slots = slots_from_params(params[:daily_tasks]).first(3)
     base = current_user.daily_tasks.where(goal: @goal, date: @date)
 
-
     slots.each do |s|
       task = s[:id].present? ? (base.find_by(id: s[:id]) || base.new) : base.new
       task.title = s[:title].to_s
 
       unless task.save
-        # ほかの理由の失敗（例: 上限3件バリデーション等）はエラーにするならここで処理
         redirect_to new_daily_task_path(goal_id: @goal.id, date: @date),
                     alert: task.errors.full_messages.to_sentence
         return
@@ -38,8 +36,6 @@ class DailyTasksController < ApplicationController
     end
     redirect_to root_path(goal_id: @goal.id, date: @date), notice: "その日のタスクを保存しました。"
   end
-
-
   def update
     task = current_user.daily_tasks.find(params[:id])
     if task.update(params.require(:daily_task).permit(:done, :title))
