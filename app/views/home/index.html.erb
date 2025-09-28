@@ -53,32 +53,50 @@
     <%= link_to "Goalを作成", new_goal_path %>
   <% end %>
 
-  <div class="card shadow-sm mt-3">
-    <div class="card-header bg-white d-flex justify-content-between align-items-center">
-      <span>カレンダー（ゴール期間）</span>
-      <% if @goal_one && @goal_three %>
-        <div class="xsmall">
-          <%= link_to "3ヶ月のゴールを表示", root_path(goal_id: @goal_three.id, date: @selected_date) %> /
-          <%= link_to "1ヶ月のゴールを表示", root_path(goal_id: @goal_one.id,   date: @selected_date) %>
-        </div>
-      <% end %>
-    </div>
-    <div class="card-body">
-      <% if @goal %>
-        <div class="calendar-grid">
-          <% ["月","火","水","木","金","土","日"].each do |w| %>
-            <div class="calendar-cell calendar-head"><%= w %></div>
-          <% end %>
-          <% @period_days.each do |day| %>
-            <% count = @days_with_counts.to_h[day] || 0 %>
-            <%= link_to root_path(goal_id: @goal.id, date: day.iso8601),class:"calendar-cell #{'calendar-active' if day == @selected_date}" do %>
-              <span><%= day.day %></span>
-            <% end %>
-          <% end %>
-        </div>
+  <div class="card-body">
+    <% if @goal %>
+      <% if @calendar_months.empty? %>
+        <div class="text-muted">期間が設定されていません</div>
       <% else %>
-        <div class="text-muted">表示する目標がありません</div>
+
+        <%# 4ヶ月ずつ1行に並べる %>
+        <% @calendar_months.each_slice(4) do |chunk| %>
+          <div class="months-row mb-3">
+            <% chunk.each do |m| %>
+              <div class="month-card card shadow-sm">
+                <div class="card-header bg-white py-2 d-flex justify-content-between align-items-center">
+                  <strong><%= m[:label] %></strong>
+                  <small class="text-muted"><%= m[:first] %>〜<%= m[:last] %></small>
+                </div>
+
+                <div class="card-body p-2">
+                  <div class="month-grid">
+                    <% ["月","火","水","木","金","土","日"].each do |w| %>
+                      <div class="calendar-cell calendar-head"><%= w %></div>
+                    <% end %>
+
+                    <%# 月曜始まりの位置合わせ（空白セルを前に挿入） %>
+                    <% offset = (m[:first].wday - 1) % 7 %>
+                    <% offset.times { %><div class="calendar-cell"></div><% } %>
+
+                    <% m[:days].each do |day| %>
+                      <% count = @days_with_counts.to_h[day] || 0 %>
+                      <%= link_to root_path(goal_id: @goal.id, date: day.iso8601),
+                                  class:"calendar-cell #{'calendar-active' if day == @selected_date}" do %>
+                        <span><%= day.day %></span>
+                        <% if count > 0 %><span class="todo-dot"><%= count %></span><% end %>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+
       <% end %>
-    </div>
+    <% else %>
+      <div class="text-muted">表示する目標がありません</div>
+    <% end %>
   </div>
 </div>
