@@ -1,0 +1,88 @@
+/* app/assets/stylesheets/application.scss に追記 */
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: .25rem; }
+
+.calendar-cell {
+  height: 44px;
+  border: 1px solid #e2e8f0;
+  border-radius: .5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  position: relative;
+  text-decoration: none;
+  color: inherit; }
+
+.calendar-head { height: auto;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-weight: 600;
+  font-size: .8rem; }
+
+.calendar-active {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1d4ed8; }
+
+.todo-dot {
+  position: absolute;
+  bottom: 4px;
+  right: 6px;
+  font-size: 10px;
+  color: #16a34a; }
+
+.months-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(220px, 1fr)); /* 4列固定、狭い画面でも崩れにくい */
+  gap: 1rem;
+}
+
+.month-card {
+  border-radius: .5rem;
+}
+
+/* 1か月分のミニカレンダー（7列） */
+.month-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: .25rem;
+}
+
+/* 既存のセルスタイルがない場合の最低限 */
+.calendar-cell {
+  height: 44px;
+  border: 1px solid #e2e8f0;
+  border-radius: .5rem;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+  font-size: .9rem;
+}
+
+.calendar-head {
+  height: auto;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-weight: 600;
+  font-size: .8rem;
+}
+
+.calendar-active {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1d4ed8;
+}
+
+.todo-dot {
+  position: absolute;
+  bottom: 4px;
+  right: 6px;
+  font-size: 10px;
+  color: #16a34a;
+}

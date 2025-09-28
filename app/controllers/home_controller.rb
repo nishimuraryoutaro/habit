@@ -24,16 +24,35 @@ class HomeController < ApplicationController
       @todos_today = DailyTask.none
     end
 
-    @period_days      = []
+    @done_count  = @todos_today.where(done: true).count
+    @total_count = @todos_today.size
+
+    @goal_three = current_user.goals.three_month.order(:created_at).first
+    # Monthly Boxes
+    @calendar_months     = []
     @days_with_counts = {}
 
     if @goal&.start_date && @goal&.target_date
-      range = (@goal.start_date..@goal.target_date)
-      @period_days = range.to_a
-      @days_with_counts = current_user.daily_tasks.where(goal: @goal, date: range).group(:date).count
-    end
+      # 月初から月末まで
+      whole_range = (@goal.start_date.beginning_of_month..@goal.target_date.end_of_month)
+      # date => count + whole_range ex{ Date(2023,9,1) => 3, Date(2023,9,2) => 0, ... }
+      @days_with_counts = current_user.daily_tasks.where(goal: @goal, date: whole_range).group(:date).count
 
-    @done_count  = @todos_today.where(done: true).count
-    @total_count = @todos_today.size
+        d = @goal.start_date.beginning_of_month
+        last_month_end = @goal.target_date.end_of_month
+        while d <= last_month_end
+          # ActiveSupport  Date/Time
+          first = d.beginning_of_month
+          last  = d.end_of_month
+          # First, last, header string, date array of that month
+          @calendar_months << {
+            first: first,
+            last:  last,
+            label: first.strftime("%Y-%m"),
+            days:  (first..last).to_a
+          }
+          d = (d >> 1) # 次の月へ
+        end
+    end
   end
 end

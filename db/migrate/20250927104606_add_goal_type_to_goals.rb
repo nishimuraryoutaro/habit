@@ -1,0 +1,5 @@
+class AddGoalTypeToGoals < ActiveRecord::Migration[8.0]
+  def change
+    add_column :goals, :goal_type, :integer
+  end
+end
