@@ -29,7 +29,7 @@ class HomeController < ApplicationController
 
     @goal_three = current_user.goals.three_month.order(:created_at).first
     # Monthly Boxes
-    @calendar_months     = []
+    @calendar_months = []
     @days_with_counts = {}
 
     if @goal&.start_date && @goal&.target_date
