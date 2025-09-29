@@ -1,6 +1,6 @@
 class Goal < ApplicationRecord
   belongs_to :user
-
+  has_many :daily_tasks, dependent: :destroy
   validates :title, presence: true
   validates :title, :start_date, :target_date, presence: true
 

@@ -74,8 +74,17 @@ class GoalsController < ApplicationController
   end
 
   def destroy
-    @goal.destroy
-    redirect_to goals_path, notice: "目標を削除しました。"
+    goal = current_user.goals.find_by(id: params[:id])
+    unless goal
+      return redirect_to profile_path(current_user), alert: "目標が見つかりません。"
+    end
+    goal.daily_tasks.destroy_all
+
+    if goal.destroy
+      redirect_to profile_path(current_user), notice: "削除しました。"
+    else
+      redirect_to profile_path(current_user), alert: "削除に失敗しました。"
+    end
   end
 
   private
