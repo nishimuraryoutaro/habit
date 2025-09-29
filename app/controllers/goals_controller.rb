@@ -7,6 +7,8 @@ class GoalsController < ApplicationController
   end
 
   def show
+    @goal = current_user.goals.find(params[:id])
+
     raw = params[:date].to_s.strip
     if raw.empty?
       @selected_date = Date.current
@@ -20,6 +22,30 @@ class GoalsController < ApplicationController
     else
       @selected_date = Date.current
     end
+
+    @calendar_months  = []
+    @days_with_counts = {}
+
+    if @goal.start_date && @goal.target_date
+      whole = (@goal.start_date.beginning_of_month..@goal.target_date.end_of_month)
+      @days_with_counts = current_user.daily_tasks.where(goal: @goal, date: whole).group(:date).count
+
+      d = @goal.start_date.beginning_of_month
+      last = @goal.target_date.end_of_month
+      while d <= last
+        first = d.beginning_of_month
+        eom   = d.end_of_month
+        @calendar_months << {
+          first: first,
+          last:  eom,
+          label: first.strftime("%Y-%m"),
+          days:  (first..eom).to_a
+        }
+        d = (d >> 1)
+      end
+    end
+
+    @tasks_today = current_user.daily_tasks.where(goal: @goal, date: @selected_date).order(:created_at).limit(3)
   end
 
   def new
