@@ -1,6 +1,76 @@
-<div class="goal container my-4">
-  <%= form_with url: daily_tasks_path, method: :post, local: true do %>
-    <%= hidden_field_tag :goal_id, @goal.id %>
-    <%= hidden_field_tag :date,    @date.to_s %>
-  <% end %>
+<div class="container my-4">
+  <div class="card shadow-sm mb-3">
+    <div class="card-body">
+      <h4 class="mb-1"><%= @goal.title %></h4>
+      <div class="text-muted small mb-2">
+        期間: <%= @goal.start_date %> 〜 <%= @goal.target_date %>
+      </div>
+      <p class="text-muted"><%= @goal.description %></p>
+      <div>
+        <%= link_to "HOMEへ", root_path(goal_id: @goal.id, date: @selected_date), class:"btn btn-outline-secondary btn-sm" %>
+      </div>
+    </div>
+  </div>
+  <div class="card shadow-sm mb-3">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+      <span>この日のタスク（<%= @selected_date %>）</span>
+      <%= link_to "この日を編集", new_daily_task_path(goal_id: @goal.id, date: @selected_date), class:"btn btn-outline-primary btn-sm" %>
+    </div>
+    <div class="card-body">
+      <% if @tasks_today.any? %>
+        <ul class="list-group list-group-flush">
+          <% @tasks_today.each do |t| %>
+            <li class="list-group-item">
+              <%= form_with model: t, url: daily_task_path(t), method: :patch, local: true, class:"d-flex align-items-center" do |f| %>
+                <%= f.check_box :done, class:"form-check-input me-2", checked: t.done, onchange:"this.form.submit()" %>
+                <%= f.text_field :title, class:"form-control", value: t.title %>
+                <%= hidden_field_tag :goal_id, @goal.id %>
+                <%= hidden_field_tag :date,    @selected_date %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <div class="text-muted small">タスクがありません。「この日を編集」から最大3件まで作成できます。</div>
+      <% end %>
+    </div>
+  </div>
+  <div class="card shadow-sm">
+    <div class="card-header bg-white">カレンダー（目標の期間）</div>
+    <div class="card-body">
+      <% if @calendar_months.empty? %>
+        <div class="text-muted">期間が設定されていません</div>
+      <% else %>
+        <% @calendar_months.each_slice(4) do |chunk| %>
+          <div class="months-row mb-3">
+            <% chunk.each do |m| %>
+              <div class="month-card card shadow-sm">
+                <div class="card-header bg-white py-2 d-flex justify-content-between align-items-center">
+                  <strong><%= m[:label] %></strong>
+                  <small class="text-muted"><%= m[:first] %>〜<%= m[:last] %></small>
+                </div>
+                <div class="card-body p-2">
+                  <div class="month-grid">
+                    <% ["月","火","水","木","金","土","日"].each do |w| %>
+                      <div class="calendar-cell calendar-head"><%= w %></div>
+                    <% end %>
+                    <% offset = (m[:first].wday - 1) % 7 %>
+                    <% offset.times { %><div class="calendar-cell"></div><% } %>
+                    <% m[:days].each do |day| %>
+                      <% count = @days_with_counts.to_h[day] || 0 %>
+                      <%= link_to goal_path(@goal, date: day.iso8601),
+                                  class:"calendar-cell #{'calendar-active' if day == @selected_date}" do %>
+                        <span><%= day.day %></span>
+                        <% if count > 0 %><span class="todo-dot"><%= count %></span><% end %>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
 </div>
