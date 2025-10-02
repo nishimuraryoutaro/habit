@@ -55,4 +55,14 @@ class HomeController < ApplicationController
         end
     end
   end
+
+  private
+  def set_goal
+    if params[:goal_id].present?
+      @goal = current_user.goals.find_by(id: params[:goal_id])
+    else
+      @goal = current_user.goals.order(:created_at).first
+    end
+    redirect_to new_goal_path, alert: "まずは目標を作成してください。"
+  end
 end

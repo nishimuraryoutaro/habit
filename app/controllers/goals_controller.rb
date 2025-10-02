@@ -92,6 +92,6 @@ class GoalsController < ApplicationController
     @goal = current_user.goals.find(params[:id])
   end
   def goal_params
-    params.require(:goal).permit(:title, :description, :start_date)
+    params.require(:goal).permit(:title, :description, :start_date, :target_date)
   end
 end

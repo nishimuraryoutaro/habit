@@ -8,12 +8,15 @@
     <div class="card shadow-sm h-100">
       <div class="card-header bg-white">最終目標</div>
       <div class="card-body">
-        <h5 class="mb-2"><%= @goal.title %></h5>
-        <div class="text-muted xsmall mb-2">
-          期間: <%= @goal.start_date || "—" %> 〜 <%= @goal.target_date || "—" %>
-        </div>
-        <p class="text-muted xsmall"><%= @goal.description %></p>
-        <div class="progress"><div class="progress-bar bg-success" style="width:%">%</div></div>
+        <% if @goal.present? %>
+          <h5 class="mb-2"><%= @goal.title %></h5>
+          <div class="text-muted xsmall mb-2">
+            <p>開始日: <%= @goal.start_date%></p>
+          </div>
+          <p class="text-muted"><%= @goal.description%></p>
+        <% else %>
+          <div class="text-muted">まだ目標がありません。</div>
+        <% end %>
       </div>
     </div>
   </div>
@@ -58,8 +61,6 @@
       <% if @calendar_months.empty? %>
         <div class="text-muted">期間が設定されていません</div>
       <% else %>
-
-        <%# 4ヶ月ずつ1行に並べる %>
         <% @calendar_months.each_slice(4) do |chunk| %>
           <div class="months-row mb-3">
             <% chunk.each do |m| %>
@@ -74,11 +75,8 @@
                     <% ["月","火","水","木","金","土","日"].each do |w| %>
                       <div class="calendar-cell calendar-head"><%= w %></div>
                     <% end %>
-
-                    <%# 月曜始まりの位置合わせ（空白セルを前に挿入） %>
                     <% offset = (m[:first].wday - 1) % 7 %>
                     <% offset.times { %><div class="calendar-cell"></div><% } %>
-
                     <% m[:days].each do |day| %>
                       <% count = @days_with_counts.to_h[day] || 0 %>
                       <%= link_to root_path(goal_id: @goal.id, date: day.iso8601),
