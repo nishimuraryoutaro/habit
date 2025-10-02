@@ -1,29 +1,46 @@
-<!-- 期間（開始日・目的日） -->
-<%= form_with model: @goal, url: goals_path, method: :post do |f| %>
-  <div class="mb-2">
-    <% if @goal.errors.any? %>
-      <div class="alert alert-danger">
-        <ul>
-          <% @goal.errors.full_messages.each do |m| %>
-            <li><%= m %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-    <%= f.label :title, "タイトル" %>
-    <%= f.text_field :title, class:"form-control", placeholder:"例：TOEIC 700" %>
-  </div>
-  <div class="row g-2">
-    <div class="col">
-      <%= f.label :start_date, "開始日" %>
-      <%= f.date_field :start_date, class:"form-control" %>
+<!-- app/views/goals/new.html.erb -->
+<div class="container my-4">
+  <h4>GOAL 作成</h4>
+  <div class="card">
+    <div class="card-body">
+      <%= form_with model: @goal, url: goals_path, method: :post, local: true do |f| %>
+        <div class="mb-3">
+          <%= f.label :title, "タイトル" %>
+          <%= f.text_field :title, class:"form-control", required: true %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :content, "説明" %>
+          <%= f.text_area :content, rows: 3, class:"form-control" %>
+        </div>
+
+        <div class="row g-2 mb-3">
+          <div class="col">
+            <%= f.label :start_date, "開始日" %>
+            <%= f.date_field :start_date, class:"form-control", required: true %>
+          </div>
+          <div class="col">
+            <%= f.label :target_date, "目的日" %>
+            <%= f.date_field :target_date, class:"form-control", required: true %>
+          </div>
+        </div>
+
+        <% if @goal.errors.any? %>
+          <div class="alert alert-danger">
+            <ul class="mb-0">
+              <% @goal.errors.full_messages.each do |m| %>
+                <li><%= m %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="d-flex justify-content-between">
+          <%= link_to "← プロフィールに戻る", profile_path(current_user), class:"btn btn-outline-secondary" %>
+          <%= f.submit "作成", class:"btn btn-primary" %>
+        </div>
+      <% end %>
     </div>
   </div>
+</div>
 
-  <!-- 説明 -->
-  <div class="mb-3 mt-2">
-    <%= f.label :description, "説明" %>
-    <%= f.text_area :description, rows:3, class:"form-control", placeholder:"目標の背景や計画をメモ" %>
-  </div>
-  <%= f.submit "作成" %>
-<% end %>

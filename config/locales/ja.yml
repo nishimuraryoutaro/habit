@@ -4,3 +4,9 @@ ja:
     sessions:
       signed_in: "ログインしました。"
       signed_out: "ログアウトしました。"
+  activerecord:
+    attributes:
+      goal:
+        title: タイトル
+        start_date: 開始日
+        target_date: 目的日
