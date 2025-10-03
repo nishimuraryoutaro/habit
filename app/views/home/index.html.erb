@@ -1,9 +1,10 @@
-
-<div class="container my-4">
+<div class="row g-3 align-items-stretch">
+  <div class="container my-4">
   <% if @goal.blank? %>
       <div class="alert alert-info">プロフィールで目標を作成してください。</div>
       <%= link_to "プロフィールへ", profile_path(current_user), class:"btn btn-primary" %>
   <% end %>
+  <div class="row g-3 align-items-stretch">
   <div class="col-12 col-md-4">
     <div class="card shadow-sm h-100">
       <div class="card-header bg-white">最終目標</div>
@@ -11,15 +12,42 @@
         <% if @goal.present? %>
           <h5 class="mb-2"><%= @goal.title %></h5>
           <div class="text-muted xsmall mb-2">
-            <p>開始日: <%= @goal.start_date%></p>
+            <p>開始日: <%= @goal.start_date %></p>
           </div>
-          <p class="text-muted"><%= @goal.description%></p>
+          <p class="text-muted"><%= @goal.description %></p>
         <% else %>
           <div class="text-muted">まだ目標がありません。</div>
+          <%= link_to "Goalを作成", new_goal_path, class: "btn btn-primary btn-sm" %>
         <% end %>
       </div>
     </div>
   </div>
+  <div class="col-12 col-md-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-header bg-white">1ヶ月の目標</div>
+      <div class="card-body">
+        <% if @goal&.one_month_title.present? %>
+          <p class="mb-0"><%= @goal.one_month_title %></p>
+        <% else %>
+          <p class="text-muted mb-0">未設定です</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-header bg-white">1週間の目標</div>
+      <div class="card-body">
+        <% if @goal&.one_week_title.present? %>
+          <p class="mb-0"><%= @goal.one_week_title %></p>
+        <% else %>
+          <p class="text-muted mb-0">未設定です</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
   <div class="col-12 col-md-8">
     <div class="card shadow-sm">
       <div class="card-header bg-white d-flex align-items-center justify-content-between">
@@ -44,7 +72,6 @@
         </ul>
       </div>
     </div>
-  </div>
   <% if @goal.present? %>
     <%= link_to "この日のタスクを編集",
         new_daily_task_path(goal_id: @goal.id, date: @selected_date),
