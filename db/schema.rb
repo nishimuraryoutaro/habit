@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_29_121528) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_02_122313) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -35,6 +35,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_29_121528) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "goal_type", default: 0, null: false
+    t.string "one_month_title"
+    t.string "one_week_title"
     t.index ["goal_type"], name: "index_goals_on_goal_type"
     t.index ["user_id"], name: "index_goals_on_user_id"
   end

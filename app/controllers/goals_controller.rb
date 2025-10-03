@@ -58,6 +58,7 @@ class GoalsController < ApplicationController
       redirect_to root_path(@goal), notice: "Goalを作成しました"
     else
       flash.now[:error] = "作成に失敗しました"
+      show
       render :new, status: :unprocessable_entity
     end
   end
@@ -92,6 +93,6 @@ class GoalsController < ApplicationController
     @goal = current_user.goals.find(params[:id])
   end
   def goal_params
-    params.require(:goal).permit(:title, :description, :start_date, :target_date)
+    params.require(:goal).permit(:title, :description, :start_date, :target_date, :one_month_title, :one_week_title)
   end
 end

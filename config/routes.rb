@@ -16,6 +16,5 @@ Rails.application.routes.draw do
 
   resources :goals, only: [ :index, :show, :edit, :create, :new, :update, :destroy ]
   resources :daily_tasks, only: [ :new, :create, :update ]
-
   resources :profiles, only: [ :show, :create, :update, :destroy ]
 end
