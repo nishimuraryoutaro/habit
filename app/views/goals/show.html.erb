@@ -63,7 +63,7 @@
         <div class="text-muted">期間が設定されていません</div>
       <% else %>
         <% @calendar_months.each_slice(4) do |chunk| %>
-          <div class="months-row mb-3">
+          <div class="months-row mb-4 d-flex flex-wrap justify-content-start">
             <% chunk.each do |m| %>
               <div class="month-card card shadow-sm">
                 <div class="card-header bg-white py-2 d-flex justify-content-between align-items-center">

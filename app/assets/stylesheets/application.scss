@@ -1,3 +1,7 @@
+@import "navbar";
+@import "home";
+@import "goal";
+
 .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: .25rem; }
 
 .calendar-cell {
@@ -33,7 +37,7 @@
 
 .months-row {
   display: grid;
-  grid-template-columns: repeat(4, minmax(220px, 1fr)); /* 4列固定、狭い画面でも崩れにくい */
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
   gap: 1rem;
 }
 
@@ -41,14 +45,13 @@
   border-radius: .5rem;
 }
 
-/* 1か月分のミニカレンダー（7列） */
+
 .month-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: .25rem;
 }
 
-/* 既存のセルスタイルがない場合の最低限 */
 .calendar-cell {
   height: 44px;
   border: 1px solid #e2e8f0;
@@ -84,4 +87,102 @@
   right: 6px;
   font-size: 10px;
   color: #16a34a;
+}
+
+.months-row {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 4), 1fr);
+  gap: 1rem;
+  width: 100%;
+}
+
+.month-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: .25rem;
+}
+
+.calendar-cell { height: 44px; border:1px solid #e2e8f0; border-radius:.5rem;
+  background:#fff; display:flex; align-items:center; justify-content:center;
+  position:relative; text-decoration:none; color:inherit; font-size:.9rem; }
+.calendar-head { height:auto; border:none; background:transparent; color:#64748b; font-weight:600; font-size:.8rem; }
+.calendar-active { background:#eff6ff; border-color:#bfdbfe; color:#1d4ed8; }
+.todo-dot { position:absolute; bottom:4px; right:6px; font-size:10px; color:#16a34a; }
+.month-card { border-radius:.5rem; }
+.card-body {
+  margin-top: px;
+  padding: 1rem;
+  background: #f9fafb;
+  border-radius: .5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+.g-create.btn {
+  --gc-start: #34d399;   /* グラデ開始（ミント） */
+  --gc-end:   #10b981;   /* グラデ終端（エメラルド） */
+  --gc-text:  #0b2b20;   /* テキスト色（濃い緑） */
+
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: 9999px;
+
+  /* ← “縦の高さ”はココで決まる */
+  padding-block: 0.95rem;        /* 上下の余白（高さUP） */
+  padding-inline: 1.25rem;       /* 左右 */
+  font-size: 4rem;           /* 18px相当 */
+  line-height: 1.1;
+
+  font-weight: 700;
+  letter-spacing: .02em;
+  color: var(--gc-text);
+  background: linear-gradient(135deg, var(--gc-start), var(--gc-end));
+  box-shadow:
+    0 10px 22px rgba(16, 185, 129, 0.22),
+    inset 0 1px 0 rgba(255,255,255,.35);
+  transition: transform .12s ease, filter .12s ease, box-shadow .12s ease;
+  text-decoration: none; /* aタグの下線保険 */
+}
+
+/* ホバー/アクティブ/フォーカス */
+.g-create.btn:hover {
+  transform: translateY(-2px);
+  filter: saturate(1.05) brightness(1.02);
+  box-shadow:
+    0 18px 28px -10px rgba(16, 185, 129, 0.45),
+    inset 0 1px 0 rgba(255,255,255,.45);
+}
+.g-create.btn:active {
+  transform: translateY(0);
+  filter: saturate(1.0);
+}
+.g-create.btn:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 .2rem rgba(16, 185, 129, .25),
+    0 10px 22px rgba(16, 185, 129, 0.22),
+    inset 0 1px 0 rgba(255,255,255,.35);
+}
+
+/* デスクトップでは“幅は自動”、わずかに引き締める */
+@media (min-width: 992px) {
+  .g-create.btn {
+    width: auto;                 /* d-lg-inline-block と併せて */
+    padding-block: 0.85rem;      /* PCで少し低めに */
+    padding-inline: 1.25rem;
+    font-size: 1.0625rem;        /* 17px相当 */
+  }
+}
+
+.ob{
+  margin-bottom: 1rem;
+}
+/* ダークモードの色味調整（任意） */
+@media (prefers-color-scheme: dark) {
+  .g-create.btn {
+    --gc-start: #22c55e;
+    --gc-end:   #16a34a;
+    --gc-text:  #052e1f;
+  }
 }
