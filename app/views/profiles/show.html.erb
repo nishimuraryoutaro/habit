@@ -1,5 +1,5 @@
-<div class="container my-4">
-  <div class="d-flex align-items-center gap-3 mb-3">
+<div class="container">
+  <div class="account d-flex mt-5 align-items-center gap-3">
     <span class="avatar d-inline-grid place-items-center rounded-circle bg-dark text-white fw-bold" style="width:34px;height:34px;display:inline-grid;place-items:center;">
       <%= @user.email.first&.upcase || "U" %>
     </span>
@@ -7,11 +7,13 @@
       <div class="h4 mb-1 fw-bold"><%= @user.email %></div>
     </div>
   </div>
-    <div class="card shadow-sm">
-      <%= link_to "GOAL作成", new_goal_path, class:"btn btn-success btn-sm" %>
-    <div class="card-header bg-white">あなたの目標一覧</div>
-    <div class="card-body p-0">
-      <table class="table table-hover mb-0">
+  <div class="btn-area">
+    <%= link_to "GOAL作成", new_goal_path, class: "g-create btn btn-success btn-sm  btn-lg d-block d-lg-inline-block w-100 w-lg-auto mt-4 mb-5" %>
+  </div>
+    <div class="card shadow-sm mb-4">
+    <div class="card-header">あなたの目標一覧</div>
+    <div class="card-body bg-white">
+      <table class="table table-hover">
         <thead>
           <tr>
             <th>タイトル</th>
@@ -22,16 +24,15 @@
         </thead>
         <tbody>
           <% @goals.each do |g| %>
-            <tr>
-              <td class="fw-semibold"><%= g.title %></td>
-              <td class="text-muted xsmall">
+            <tr id="goal-<%= g.id %>">
+              <td class="fw-semibold align-middle"><%= g.title %></td>
+              <td class="text-muted align-middle xsmall">
                 <%= g.start_date || "—" %> 〜 <%= g.target_date || "—" %>
               </td>
-              <td class="text-truncate" style="max-width:320px;"><%= g.description %></td>
-              <td class="text-end">
-                <%= link_to "HOMEで表示",root_path(g,goal_id: g.id), class:"btn btn-outline-primary btn-sm" %>
-                <%= link_to "Goal詳細", goal_path(g, goal_id: g.id), class:"btn btn-outline-secondary btn-sm ms-1" %>
-                <%= button_to "削除", goal_path(g),method: :delete,form: { data: { turbo_confirm: "本当に削除しますか？（タスクも消えます）" } },class: "btn btn-outline-danger btn-sm ms-1" %>
+              <td class="text-truncate align-middle" style="max-width:320px;"><%= g.description %></td>
+              <td class="text-end align-middle">
+                <%= link_to "HOMEで表示",root_path(g,goal_id: g.id), class:"ob btn btn-outline-primary btn-sm" %>
+                <%= button_to "削除", goal_path(g),method: :delete,form: { data: { turbo_confirm: "本当に削除しますか？（タスクも消えます）" } },class: "ob btn btn-outline-danger btn-sm" %>
               </td>
             </tr>
           <% end %>
