@@ -1,0 +1,16 @@
+{
+  "name": "habit app",
+  "description": "This is habitapp",
+  "keywords": [],
+  "website": "",
+  "repository": "https://github.com/nishimuraryoutaro/habit",
+  "env": {},
+  "addons": [
+  "heroku-postgresql:essential-0"
+  ],
+  "buildpacks": [{
+    "url": "heroku/nodejs"
+  }, {
+    "url": "heroku/ruby"
+  }]
+}
