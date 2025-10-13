@@ -55,7 +55,7 @@ class GoalsController < ApplicationController
   def create
     @goal = current_user.goals.new(goal_params)
     if @goal.save
-      redirect_to profile_path(current_user, @goal.id), notice: "Goalを作成しました"
+      redirect_to profile_path(current_user, @goal.id), notice: "Goalを作成しました", status: :see_other
     else
       flash.now[:error] = "作成に失敗しました"
       show

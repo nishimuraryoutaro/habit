@@ -1,7 +1,7 @@
 @import "navbar";
 @import "home";
 @import "goal";
-
+@import "devise";
 .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: .25rem; }
 
 .calendar-cell {
@@ -121,7 +121,6 @@
 .g-create.btn {
   --gc-start: #34d399;   /* グラデ開始（ミント） */
   --gc-end:   #10b981;   /* グラデ終端（エメラルド） */
-  --gc-text:  #0b2b20;   /* テキスト色（濃い緑） */
 
   display: block;
   width: 100%;
@@ -184,5 +183,146 @@
     --gc-start: #22c55e;
     --gc-end:   #16a34a;
     --gc-text:  #052e1f;
+  }
+}
+
+
+/* =========================================
+ * Daily Tasks Edit（この日のタスク編集）Styling
+ * 既存HTMLそのまま適用
+ * ========================================= */
+
+/* 見出しとメタ情報 */
+
+.container.my-4 > h5 {
+  font-weight: 800;
+  letter-spacing: .02rem;
+  color: #0f172a;
+}
+.container.my-4 > .text-muted.xsmall {
+  color: #64748b !important;
+  font-size: .85rem;
+}
+
+/* カード全体 */
+.container.my-4 .card.shadow-sm {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  box-shadow: 0 10px 28px rgba(15,23,42,.06);
+  overflow: hidden;
+}
+
+/* カードヘッダ：淡いグラデ＋下線 */
+.container.my-4 .card .card-header.bg-white {
+  background: linear-gradient(180deg, #ffffff, #f9fbff) !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  color: #0f172a;
+  font-weight: 700;
+  letter-spacing: .02rem;
+  padding: .8rem 1rem;
+}
+
+/* フォーム内の各テキストボックスを“行”っぽく */
+.container.my-4 .card .card-body form .form-control {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  color: #0f172a;
+  padding: .8rem .9rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 0 rgba(15,23,42,.03) inset;
+  transition: border-color .12s ease, box-shadow .12s ease, background-color .12s ease;
+  margin-bottom: .75rem;         /* ← 各行の間隔（3件が気持ちよく並ぶ） */
+}
+.container.my-4 .card .card-body form .form-control::placeholder {
+  color: #94a3b8;
+}
+.container.my-4 .card .card-body form .form-control:focus {
+  border-color: #bfdbfe;
+  box-shadow: 0 0 0 .22rem rgba(59,130,246,.15);
+  background: #ffffff;
+}
+
+/* “HOMEへ戻る / 保存する” のボタン行を少し映えさせる */
+.container.my-4 .card .card-body .d-flex.justify-content-between {
+  margin-top: .75rem;
+}
+.container.my-4 .card .btn.btn-outline-secondary {
+  border-radius: .8rem;
+  border-color: #cbd5e1;
+  color: #475569;
+  font-weight: 700;
+  padding: .55rem .9rem;
+}
+.container.my-4 .card .btn.btn-outline-secondary:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+  border-color: #94a3b8;
+}
+.container.my-4 .card .btn.btn-primary {
+  border-radius: .8rem;
+  padding: .55rem 1rem;
+  font-weight: 800;
+  box-shadow: 0 10px 18px rgba(37,99,235,.12);
+}
+
+/* エラーブロック（バリデーション時）も上品に */
+.container.my-4 .card .alert.alert-danger {
+  border-radius: 12px;
+  border-color: #fecaca;
+  background: #fff1f2;
+  color: #7f1d1d;
+}
+.todo-edit-title {
+  font-size: 3rem;
+  margin-top: 2rem;
+  margin-bottom: .5rem;
+  font-weight: 800;
+  letter-spacing: .02rem;
+  color: #0f172a;
+}
+/* 入力行に“1〜3”の番号をうっすら表示（CSSだけで） */
+.container.my-4 .card .card-body form {
+  counter-reset: taskno;
+}
+.container.my-4 .card .card-body form .form-control {
+  position: relative;
+}
+.container.my-4 .card .card-body form .form-control::before {
+  counter-increment: taskno;
+  content: counter(taskno);
+  position: absolute;
+  left: .6rem; top: 50%;
+  transform: translateY(-50%);
+  width: 28px; height: 28px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-weight: 800; font-size: .85rem;
+}
+/* 番号チップとテキストが重ならないよう左パディングを増やす */
+.container.my-4 .card .card-body form .form-control {
+  padding-left: 2.6rem;
+}
+
+/* 余白と最大幅（読みやすい横幅に） */
+.container.my-4 {
+  max-width: 760px;
+}
+
+/* スマホ最適化：押しやすい高さに */
+@media (max-width: 575.98px) {
+  .container.my-4 .card .card-body form .form-control {
+    padding: .9rem 1rem;
+    padding-left: 2.8rem;
+    font-size: 1rem;
+  }
+  .container.my-4 .card .btn {
+    width: 100%;
+  }
+  .container.my-4 .card .d-flex.justify-content-between {
+    gap: .5rem;
+    flex-wrap: wrap;
   }
 }
