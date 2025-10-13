@@ -1,5 +1,20 @@
-<p>Welcome <%= @email %>!</p>
+<% content_for :title, "メールアドレスの確認" %>
+<h1 style="margin:0 0 8px;font-size:20px;">メールアドレスの確認</h1>
+<p style="margin:0 0 16px;line-height:1.7;">
+  <%= @email || @resource.email %> 宛にアカウント登録を受け付けました。<br>
+  以下のボタンを押してメールアドレスを確認してください。
+</p>
 
-<p>You can confirm your account email through the link below:</p>
+<% url = confirmation_url(@resource, confirmation_token: @token) %>
+<p style="margin:20px 0;">
+  <a href="<%= url %>"
+     style="display:inline-block;background:#2563eb;color:#ffffff;text-decoration:none;
+            padding:12px 18px;border-radius:10px;font-weight:700;">
+    メールアドレスを確認する
+  </a>
+</p>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+<p style="margin:16px 0 0;font-size:13px;color:#64748b;">
+  ボタンが開けない場合：<br>
+  <a href="<%= url %>" style="color:#2563eb;"><%= url %></a>
+</p>

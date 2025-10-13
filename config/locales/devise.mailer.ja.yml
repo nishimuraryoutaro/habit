@@ -1,0 +1,13 @@
+ja:
+  devise:
+    mailer:
+      confirmation_instructions:
+        subject: "【Habit】メールアドレスの確認"
+      reset_password_instructions:
+        subject: "【Habit】パスワード再設定のご案内"
+      unlock_instructions:
+        subject: "【Habit】アカウントロック解除のご案内"
+      email_changed:
+        subject: "【Habit】メールアドレス変更のお知らせ"
+      password_change:
+        subject: "【Habit】パスワード変更のお知らせ"

@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="account d-flex mt-5 align-items-center gap-3">
+  <div class="account d-flex mb-3 mt-5 align-items-center gap-3">
     <span class="avatar d-inline-grid place-items-center rounded-circle bg-dark text-white fw-bold" style="width:34px;height:34px;display:inline-grid;place-items:center;">
       <%= @user.email.first&.upcase || "U" %>
     </span>
@@ -29,9 +29,9 @@
               <td class="text-muted align-middle xsmall">
                 <%= g.start_date || "—" %> 〜 <%= g.target_date || "—" %>
               </td>
-              <td class="text-truncate align-middle" style="max-width:320px;"><%= g.description %></td>
+              <td class="text-truncate align-middle" style="max-width:320px;"><%= g.description.presence || "—" %></td>
               <td class="text-end align-middle">
-                <%= link_to "HOMEで表示",root_path(g,goal_id: g.id), class:"ob btn btn-outline-primary btn-sm" %>
+                <%= link_to "HOMEで表示",root_path(goal_id: g.id), class:"ob btn btn-outline-primary btn-sm" %>
                 <%= button_to "削除", goal_path(g),method: :delete,form: { data: { turbo_confirm: "本当に削除しますか？（タスクも消えます）" } },class: "ob btn btn-outline-danger btn-sm" %>
               </td>
             </tr>
