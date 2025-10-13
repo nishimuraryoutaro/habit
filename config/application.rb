@@ -32,6 +32,5 @@ module Habit
     config.i18n.default_locale = :ja
     config.i18n.available_locales = [ :en, :ja ]
 
-    
   end
 end
