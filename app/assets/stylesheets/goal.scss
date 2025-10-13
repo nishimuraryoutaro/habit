@@ -1,16 +1,17 @@
-/* ===========================
- * Goals index list (clean & modern)
- * 対象: <div class="container my-4"> 内の <ul class="list-group">
- * =========================== */
 
-/* 見出しの余白と太さを少し強めに */
 .container.my-4 > h5 {
   font-weight: 800;
   letter-spacing: .02rem;
   margin-bottom: .8rem;
   color: #0f172a;
 }
-
+.title-large {
+  margin-top: 4rem;
+  margin-bottom: 3rem;
+  font-size: 2.75rem;
+  font-weight: 700;
+  color: #1e293b;
+}
 /* リスト全体をカードっぽく */
 .container.my-4 > .list-group {
   border: 1px solid #e5e7eb;
@@ -20,73 +21,89 @@
   overflow: hidden; /* 子の角丸を維持 */
 }
 
-/* 各行をフラット＋ホバーで少し持ち上がる */
+/* ===== Goals List (Bigger & Comfy) ===== */
+
+/* リスト全体の余白と影を少し強めに（親を包んでいると想定：.container.my-4） */
+.container.my-4 > .list-group {
+  border-radius: 16px;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, .06);
+  overflow: hidden; /* 角丸を活かす */
+}
+
+/* 各行：高さ/余白UP、フォント大きめ、行間ゆったり */
 .container.my-4 > .list-group .list-group-item {
   background: #fff;
   border-color: #eef1f5;
-  padding: .9rem 1rem;
+  padding: 3.15rem 3.25rem;             /* ← 余白UP */
+  min-height: 100px;                      /* ← 背を高く */
   transition: background-color .12s ease, transform .08s ease, box-shadow .12s ease;
 }
 .container.my-4 > .list-group .list-group-item:hover {
   background: #f9fafb;
+  transform: translateY(-1px);           /* ほんの少し持ち上げる */
+  box-shadow: 0 8px 16px rgba(15, 23, 42, .06) inset;
 }
 
-/* タイトルとメタの見た目を整理 */
+/* 左側本文：縦並び＋余白UP＋文字大きめ */
 .container.my-4 > .list-group .list-group-item > span:first-child {
   display: flex;
   flex-direction: column;
-  gap: .15rem;
-  min-width: 0; /* テキストのはみ出し防止 */
+  gap: .5rem;                            /* ← タイトルとメタの間隔 */
+  min-width: 0;                          /* テキストはみ出し防止 */
 }
 .container.my-4 > .list-group .list-group-item strong {
   font-weight: 800;
   color: #0f172a;
+  font-size: 2.05rem;                    /* ← タイトル大きめ */
+  line-height: 1.35;
 }
 .container.my-4 > .list-group .list-group-item .xsmall {
-  color: #6b7280 !important; /* muted */
-  font-size: .82rem;
+  color: #6b7280 !important;
+  font-size: .92rem;                     /* ← メタも気持ち大きく */
+  line-height: 1.5;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 56ch; /* メタテキストを長すぎない範囲で省略 */
+  max-width: 64ch;                       /* ← 表示幅拡張 */
 }
 
-/* 右側の「詳細」ボタンを少しだけ目立たせる */
-.container.my-4 > .list-group .btn.btn-outline-secondary.btn-sm {
+/* 右側ボタン：存在感アップ（サイズ/角丸/影） */
+.container.my-4 > .list-group .btn.btn-outline-secondary.btn-sm,
+.container.my-4 > .list-group .btn.btn-outline-primary.btn-sm {
   border-color: #cbd5e1;
-  color: #475569;
-  border-radius: .8rem;
+  color: #334155;
+  border-radius: 12px;                   /* ← 角丸大きく */
   font-weight: 700;
-  padding: .45rem .8rem;
-  transition: background-color .15s ease, color .15s ease, box-shadow .15s ease;
+  padding: .6rem 1rem;                   /* ← 大きめ */
+  font-size: .95rem;                     /* ← 文字もUP */
+  transition: background-color .15s ease, color .15s ease, box-shadow .15s ease, transform .08s ease;
 }
-.container.my-4 > .list-group .btn.btn-outline-secondary.btn-sm:hover {
-  background: #f1f5f9;
+.container.my-4 > .list-group .btn.btn-outline-secondary.btn-sm:hover,
+.container.my-4 > .list-group .btn.btn-outline-primary.btn-sm:hover {
+  background: #eef2f7;
   color: #0f172a;
   border-color: #94a3b8;
-  box-shadow: 0 6px 16px rgba(15, 23, 42, .08);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, .08);
+  transform: translateY(-1px);
 }
 
-/* 最初と最後の行の境界を柔らかく（角丸を活かす） */
+/* 先頭/末尾 行の角丸 */
 .container.my-4 > .list-group .list-group-item:first-child {
-  border-top-left-radius: 14px;
-  border-top-right-radius: 14px;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
 }
 .container.my-4 > .list-group .list-group-item:last-child {
-  border-bottom-left-radius: 14px;
-  border-bottom-right-radius: 14px;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
 }
 
-/* スマホで縦積み・ボタンを下に気持ちよく配置 */
-@media (max-width: 575.98px) {
-  .container.my-4 > .list-group .list-group-item.d-flex {
-    flex-wrap: wrap;
-    gap: .5rem .75rem;
+@media (max-width: 575.98px){
+  .container.my-4 > .list-group .list-group-item {
+    padding: 1.1rem 1rem;
+    min-height: 84px;                    /* タップしやすい高さ */
   }
-  .container.my-4 > .list-group .list-group-item > span:first-child {
-    flex: 1 1 100%;
-  }
-  .container.my-4 > .list-group .btn.btn-outline-secondary.btn-sm {
-    margin-left: auto; /* 右端に寄せる */
+  .container.my-4 > .list-group .btn.btn-outline-secondary.btn-sm,
+  .container.my-4 > .list-group .btn.btn-outline-primary.btn-sm {
+    width: 100%;
   }
 }
