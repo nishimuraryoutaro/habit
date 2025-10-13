@@ -83,3 +83,7 @@ production:
   username: habit
   password: <%= ENV['DATABASE_PASSWORD'] %>
   host: <%= ENV['DATABASE_HOST'] %>
+
+
+cable:
+  url: <%= ENV["DATABASE_URL"] %>
