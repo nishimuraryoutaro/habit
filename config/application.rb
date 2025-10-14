@@ -10,7 +10,7 @@ module Habit
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
-    if ['development', 'test'].include? ENV['RAILS_ENV']
+    if [ "development", "test" ].include? ENV["RAILS_ENV"]
       Bundler.require(*Rails.groups)
       Dotenv::Railtie.load
     end
