@@ -311,6 +311,26 @@
   max-width: 760px;
 }
 
+
+/* ホバーで出す */
+.account { position: relative; }
+.account .account-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 220px;
+  background: #fff;
+  border-radius: .5rem;
+  display: none;
+  z-index: 1000;
+}
+.account:hover .account-menu,
+.account:focus-within .account-menu { display: block; }
+
+/* 見た目の微調整（任意） */
+.account .avatar { cursor: pointer; }
+
+
 /* スマホ最適化：押しやすい高さに */
 @media (max-width: 575.98px) {
   .container.my-4 .card .card-body form .form-control {
