@@ -15,7 +15,7 @@ test:
 
 production:
   <<: *default
-  database: blogapp_production
-  username: blogapp
+  database: habit_production
+  username: habit
   password: <%= ENV['DATABASE_PASSWORD'] %>
   host: <%= ENV['DATABASE_HOST'] %>
