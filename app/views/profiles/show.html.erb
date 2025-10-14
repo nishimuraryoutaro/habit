@@ -1,12 +1,17 @@
 <div class="container">
-  <div class="account d-flex mb-3 mt-5 align-items-center gap-3">
-    <span class="avatar d-inline-grid place-items-center rounded-circle bg-dark text-white fw-bold" style="width:34px;height:34px;display:inline-grid;place-items:center;">
-      <%= @user.email.first&.upcase || "U" %>
-    </span>
-    <div>
-      <div class="h4 mb-1 fw-bold"><%= @user.email %></div>
+  <div class="account d-flex mb-3 mt-5 align-items-center gap-3 position-relative">
+  <span class="avatar d-inline-grid place-items-center rounded-circle bg-dark text-white fw-bold"
+        style="width:34px;height:34px;display:inline-grid;place-items:center;">
+    <%= @user.email.first&.upcase || "U" %>
+  </span>
+  <div class="account-menu card shadow-sm">
+    <div class="px-3 pt-2 small text-muted"><%= @user.email %></div>
+    <div class="p-2">
+      <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "btn btn-danger btn-sm w-100 text-start" %>
     </div>
   </div>
+</div>
+
   <div class="btn-area">
     <%= link_to "GOAL作成", new_goal_path, class: "g-create btn btn-success btn-sm  btn-lg d-block d-lg-inline-block w-100 w-lg-auto mt-4 mb-5" %>
   </div>
