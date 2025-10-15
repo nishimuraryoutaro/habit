@@ -5,15 +5,14 @@
 # https://guides.rubyonrails.org/security.html#content-security-policy-header
 
 Rails.application.configure do
-  config.content_security_policy do |policy|
-    policy.default_src :self, :https
-    policy.script_src  :self, :https
-    policy.style_src   :self, :https
-    policy.img_src     :self, :https, :data
-    policy.font_src    :self, :https, :data
-    policy.connect_src :self, :https
-    # Specify URI for violation reports
-    # policy.report_uri "/csp-violation-report-endpoint"
+  config.content_security_policy do |p|
+    p.default_src :self
+    p.script_src  :self, :https
+    p.style_src   :self, :https
+    p.img_src     :self, :https, :data
+    p.object_src  :none
+    p.frame_ancestors :none
+    p.base_uri :self
   end
 
   #   # Generate session nonces for permitted importmap, inline scripts, and inline styles.
