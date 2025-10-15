@@ -6,10 +6,12 @@
 
 Rails.application.configure do
   config.content_security_policy do |p|
-    p.default_src :self
+    p.default_src :self, :https
     p.script_src  :self, :https
     p.style_src   :self, :https
     p.img_src     :self, :https, :data
+    p.font_src    :self, :https, :data
+    p.connect_src :self, :https
     p.object_src  :none
     p.frame_ancestors :none
     p.base_uri :self
