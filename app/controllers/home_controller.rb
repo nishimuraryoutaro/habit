@@ -56,6 +56,9 @@ class HomeController < ApplicationController
     end
   end
 
+  def privacy; end
+  def terms; end
+
   private
   def set_goal
     if params[:goal_id].present?

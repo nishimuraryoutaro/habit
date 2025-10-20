@@ -1,119 +1,138 @@
+
+
+<% if user_signed_in? %>
   <div class="row g-3 align-items-stretch">
     <div class="container my-4 full-bleed">
-    <% if @goal.blank? %>
+      <% if @goal.blank? %>
         <div class="alert alert-info">プロフィールで目標を作成してください。</div>
         <%= link_to "プロフィールへ", profile_path(current_user), class:"btn btn-primary" %>
-    <% end %>
-    <div class="row row-cols-1 row-cols-md-3 g-3 mt-4 align-items-stretch">
-      <div class="col-12 col-md-4">
-        <div class="card shadow-sm h-100">
-          <div class="card-header bg-white">最終目標</div>
-          <div class="card-body">
-            <% if @goal.present? %>
-              <h5 class="mb-2"><%= @goal.title %></h5>
-              <div class="text-muted xsmall mb-2">
-                <p>開始日: <%= @goal.start_date %></p>
-              </div>
-              <p class="text-muted"><%= @goal.description %></p>
-            <% else %>
-              <div class="text-muted">まだ目標がありません。</div>
-              <%= link_to "Goalを作成", new_goal_path, class: "btn btn-primary btn-sm" %>
-            <% end %>
+      <% end %>
+      <div class="row row-cols-1 row-cols-md-3 g-3 mt-4 align-items-stretch">
+        <div class="col-12 col-md-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-header bg-white">最終目標</div>
+            <div class="card-body">
+              <% if @goal.present? %>
+                <h5 class="mb-2"><%= @goal.title %></h5>
+                <div class="text-muted xsmall mb-2">
+                  <p>開始日: <%= @goal.start_date %></p>
+                </div>
+                <p class="text-muted"><%= @goal.description %></p>
+              <% else %>
+                <div class="text-muted">まだ目標がありません。</div>
+                <%= link_to "Goalを作成", new_goal_path, class: "btn btn-primary btn-sm" %>
+              <% end %>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-12 col-md-4">
-        <div class="card shadow-sm h-100">
-          <div class="card-header bg-white">1ヶ月の目標</div>
-          <div class="card-body">
-            <% if @goal&.one_month_title.present? %>
-              <p class="mb-0"><%= @goal.one_month_title %></p>
-            <% else %>
-              <p class="text-muted mb-0">未設定です・Goals/詳細で作成してください</p>
-            <% end %>
+        <div class="col-12 col-md-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-header bg-white">1ヶ月の目標</div>
+            <div class="card-body">
+              <% if @goal&.one_month_title.present? %>
+                <p class="mb-0"><%= @goal.one_month_title %></p>
+              <% else %>
+                <p class="text-muted mb-0">未設定です・Goals/詳細で作成してください</p>
+              <% end %>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-12 col-md-4">
-        <div class="card shadow-sm h-100">
-          <div class="card-header bg-white">1週間の目標</div>
-          <div class="card-body">
-            <% if @goal&.one_week_title.present? %>
-              <p class="mb-0"><%= @goal.one_week_title %></p>
-            <% else %>
-              <p class="text-muted mb-0">未設定です・Goals/詳細で作成してください</p>
-            <% end %>
+        <div class="col-12 col-md-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-header bg-white">1週間の目標</div>
+            <div class="card-body">
+              <% if @goal&.one_week_title.present? %>
+                <p class="mb-0"><%= @goal.one_week_title %></p>
+              <% else %>
+                <p class="text-muted mb-0">未設定です・Goals/詳細で作成してください</p>
+              <% end %>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="row g-3">
-    <div class="card shadow-sm mb-4 col-12 col-lg-9 mx-auto">
-      <div class="card-header bg-white d-flex align-items-center justify-content-between">
-        <h6 class="mb-0">今日のタスク（<%= @selected_date %>）</h6>
-        <small class="text-muted"><%= @done_count %>/<%= @total_count %> 完了</small>
-      </div>
-      <div class="card-body p-0">
-        <ul class="list-group list-group-flush">
-          <% @todos_today.each do |t| %>
-            <li class="list-group-item d-flex align-items-center" data-controller="check">
-              <%= form_with model: t, url: daily_task_path(t), method: :patch, class:"d-flex align-items-center w-100", data:{ check_target:"form" } do |f| %>
-                <div class="form-check me-2">
-                  <%= f.check_box :done, class:"form-check-input", checked:t.done, data:{ action:"change->check#toggle", check_target:"checkbox" } %>
-                </div>
-                <span class="flex-grow-1 <%= 'task-done' if t.done %>" data-check-target="label"><%= t.title %></span>
-              <% end %>
-            </li>
-          <% end %>
-          <% if @todos_today.empty? %>
-            <li class="list-group-item text-muted small mt-4 mb-3">この日に設定されたタスクはまだありません。</li>
-          <% end %>
-        </ul>
-      </div>
+
+    <div class="row g-3">
+      <div class="card shadow-sm mb-4 col-12 col-lg-9 mx-auto">
+        <div class="card-header bg-white d-flex align-items-center justify-content-between">
+          <h6 class="mb-0">今日のタスク（<%= @selected_date %>）</h6>
+          <small class="text-muted"><%= @done_count %>/<%= @total_count %> 完了</small>
+        </div>
+        <div class="card-body p-0">
+          <ul class="list-group list-group-flush">
+            <% @todos_today.each do |t| %>
+              <li class="list-group-item d-flex align-items-center" data-controller="check">
+                <%= form_with model: t, url: daily_task_path(t), method: :patch, class:"d-flex align-items-center w-100", data:{ check_target:"form" } do |f| %>
+                  <div class="form-check me-2">
+                    <%= f.check_box :done, class:"form-check-input", checked:t.done, data:{ action:"change->check#toggle", check_target:"checkbox" } %>
+                  </div>
+                  <span class="flex-grow-1 <%= 'task-done' if t.done %>" data-check-target="label"><%= t.title %></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if @todos_today.empty? %>
+              <li class="list-group-item text-muted small mt-4 mb-3">この日に設定されたタスクはまだありません。</li>
+            <% end %>
+          </ul>
+        </div>
         <% if @goal.present? %>
           <%= link_to "この日のタスクを編集",
               new_daily_task_path(goal_id: @goal.id, date: @selected_date),
               class:"btn btn-sm btn-outline-primary" %>
         <% end %>
-    </div>
-  <div class="card-body shadow-sm mb-4 mx-auto col-12 col-lg-9">
-  <% if @goal %>
-    <% if @calendar_months.empty? %>
-      <div class="text-muted">期間が設定されていません</div>
-    <% else %>
-      <% cols = [@calendar_months.size, 4].min %>
-      <div class="months-row mt-4 mb-4 full-bleed mx-auto" style="--cols:<%= cols %>">
-        <% @calendar_months.each do |m| %>
-          <div class="month-card card shadow-sm">
-            <div class="card-header bg-white py-2 d-flex justify-content-between align-items-center">
-              <strong><%= m[:label] %></strong>
-              <small class="text-muted"><%= m[:first] %>〜<%= m[:last] %></small>
-            </div>
+      </div>
 
-            <div class="card-body p-2">
-              <div class="month-grid">
-                <% ["月","火","水","木","金","土","日"].each do |w| %>
-                  <div class="calendar-cell calendar-head"><%= w %></div>
-                <% end %>
-                <% offset = (m[:first].wday - 1) % 7 %>
-                <% offset.times { %><div class="calendar-cell"></div><% } %>
-                <% m[:days].each do |day| %>
-                  <% count = @days_with_counts.to_h[day] || 0 %>
-                  <%= link_to root_path(goal_id: @goal.id, date: day.iso8601),
-                              class:"calendar-cell #{'calendar-active' if day == @selected_date}" do %>
-                    <span><%= day.day %></span>
-                    <% if count > 0 %><span class="todo-dot"><%= count %></span><% end %>
-                  <% end %>
-                <% end %>
-              </div>
+      <div class="card-body shadow-sm mb-4 mx-auto col-12 col-lg-9">
+        <% if @goal %>
+          <% if @calendar_months.empty? %>
+            <div class="text-muted">期間が設定されていません</div>
+          <% else %>
+            <% cols = [@calendar_months.size, 4].min %>
+            <div class="months-row mt-4 mb-4 full-bleed mx-auto" style="--cols:<%= cols %>">
+              <% @calendar_months.each do |m| %>
+                <div class="month-card card shadow-sm">
+                  <div class="card-header bg-white py-2 d-flex justify-content-between align-items-center">
+                    <strong><%= m[:label] %></strong>
+                    <small class="text-muted"><%= m[:first] %>〜<%= m[:last] %></small>
+                  </div>
+
+                  <div class="card-body p-2">
+                    <div class="month-grid">
+                      <% ["月","火","水","木","金","土","日"].each do |w| %>
+                        <div class="calendar-cell calendar-head"><%= w %></div>
+                      <% end %>
+                      <% offset = (m[:first].wday - 1) % 7 %>
+                      <% offset.times { %><div class="calendar-cell"></div><% } %>
+                      <% m[:days].each do |day| %>
+                        <% count = @days_with_counts.to_h[day] || 0 %>
+                        <%= link_to root_path(goal_id: @goal.id, date: day.iso8601),
+                                    class:"calendar-cell #{'calendar-active' if day == @selected_date}" do %>
+                          <span><%= day.day %></span>
+                          <% if count > 0 %><span class="todo-dot"><%= count %></span><% end %>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
             </div>
-          </div>
+          <% end %>
+        <% else %>
+          <div class="text-center">表示するカレンダーがありません</div>
         <% end %>
       </div>
-    <% end %>
-  <% else %>
-    <div class="text-center">表示するカレンダーがありません</div>
-  <% end %>
-</div>
-</div>
+    </div>
+  </div>
+<% else %>
+  <div class="container py-5">
+    <h1 class="mb-3">Habit（習慣管理アプリ）</h1>
+    <p class="lead">目標と日々のタスクを記録・振り返りできるシンプルなツールです。</p>
+    <div class="mt-4">
+      <%= link_to "ログイン", new_user_session_path, class: "btn btn-primary me-2" %>
+      <%= link_to "新規登録", new_user_registration_path, class: "btn btn-outline-secondary" %>
+    </div>
+    <hr class="my-4">
+    <p><%= link_to "プライバシーポリシー", "/privacy" %> ・ <%= link_to "利用規約", "/terms" %></p>
+    <p class="text-muted small">運営: （あなたの名前/連絡先）</p>
+  </div>
+<% end %>
