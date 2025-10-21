@@ -2,7 +2,6 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  config.hosts << "habit-ricardo-cdca77501eb5.herokuapp.com"
   # Code is not reloaded between requests.
   config.enable_reloading = false
 
@@ -32,7 +31,7 @@ Rails.application.configure do
   config.ssl_options = { hsts: { expires: 1.year, preload: true } }
   # Skip http-to-https redirect for the default health check endpoint.
   # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
-  config.hosts << "habitapp-taro-d01b2e3587a8.herokuapp.com"
+  config.hosts << "habitapp75618ricardo-dca17e342d8e.herokuapp.com"
   # Log to STDOUT with the current request id as a default log tag.
   config.log_tags = [ :request_id ]
   config.logger   = ActiveSupport::TaggedLogging.logger(STDOUT)
@@ -58,7 +57,7 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "habit-ricardo-cdca77501eb5.herokuapp.com", protocol: "https" }
+  config.action_mailer.default_url_options = { host: "https://habitapp75618ricardo-dca17e342d8e.herokuapp.com/", protocol: "https" }
 
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
   # config.action_mailer.smtp_settings = {
